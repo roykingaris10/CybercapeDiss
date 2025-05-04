@@ -19,8 +19,8 @@ export default function Chatbot({ role }: ChatbotProps) {
   const scrollViewRef = useRef<ScrollView>(null);
   
   // Hardcoded API key
-  const OPENAI_API_KEY = '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';
-
+  const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+  
   // Scroll to bottom when messages change or when keyboard appears
   useEffect(() => {
     if (scrollViewRef.current) {

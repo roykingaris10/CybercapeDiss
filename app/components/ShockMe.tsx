@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-// Collection of cybersecurity incidents
+// Database of real cybersecurity incidents in healthcare
 const cybersecurityIncidents = [
   {
     id: 1,
@@ -11,7 +11,7 @@ const cybersecurityIncidents = [
     description: "The WannaCry ransomware attack affected over 200,000 computers across 150 countries, including the UK's National Health Service (NHS). The attack caused estimated damages of $4 billion and disrupted healthcare services for days.",
     impact: "Critical",
     source: "NHS Digital",
-    imageName: "anthem" // Just store the image name
+    imageName: "anthem"
   },
   {
     id: 2,
@@ -96,272 +96,163 @@ const cybersecurityIncidents = [
   }
 ];
 
-// Cybersecurity statistics
-const cybersecurityStats = [
-  {
-    id: 1,
-    title: "Healthcare Data Breach Costs",
-    description: "The average cost of a healthcare data breach in 2023 was $10.93 million, making healthcare the most expensive industry for data breaches for the 13th consecutive year.",
-    source: "IBM Cost of a Data Breach Report 2023"
-  },
-  {
-    id: 2,
-    title: "Ransomware in Healthcare",
-    description: "In 2022, 66% of healthcare organizations experienced a ransomware attack, with 61% of those attacks resulting in data encryption.",
-    source: "Sophos State of Ransomware in Healthcare 2023"
-  },
-  {
-    id: 3,
-    title: "Healthcare Cyberattacks",
-    description: "Healthcare organizations experienced an average of 1,426 cyberattacks per week in 2022, a 86% increase from 2021.",
-    source: "Check Point Research"
-  },
-  {
-    id: 4,
-    title: "Patient Data Exposure",
-    description: "Between 2009 and 2021, over 3,705 healthcare data breaches of 500+ records were reported to HHS, affecting over 268 million people.",
-    source: "HIPAA Journal"
-  },
-  {
-    id: 5,
-    title: "Medical Device Vulnerabilities",
-    description: "A 2021 study found that 53% of connected medical devices and other IoT devices in hospitals had known critical vulnerabilities.",
-    source: "Cynerio IoT Security Report"
-  },
-  {
-    id: 6,
-    title: "Healthcare Phishing Attacks",
-    description: "91% of all cyberattacks begin with a phishing email, and healthcare workers are three times more likely to click on phishing links than other industries.",
-    source: "Proofpoint 2023 State of the Phish"
-  },
-  {
-    id: 7,
-    title: "Healthcare Recovery Time",
-    description: "Healthcare organizations take an average of 287 days to identify and contain a data breach, longer than any other industry.",
-    source: "IBM Cost of a Data Breach Report 2023"
-  },
-  {
-    id: 8,
-    title: "Medical Identity Theft",
-    description: "Medical identity theft affects 1.5 million people in the U.S. each year, with victims paying an average of $13,500 to resolve the crime.",
-    source: "Medical Identity Fraud Alliance"
-  },
-  {
-    id: 9,
-    title: "Healthcare IoT Security",
-    description: "By 2025, there will be over 50 billion connected medical devices worldwide, creating an expanded attack surface for cybercriminals.",
-    source: "Statista"
-  },
-  {
-    id: 10,
-    title: "Healthcare Cybersecurity Investment",
-    description: "Healthcare organizations are expected to spend $125 billion on cybersecurity products and services between 2020 and 2025.",
-    source: "Market and Markets Healthcare Cybersecurity Report"
-  }
-];
-
-// Role-specific cybersecurity facts
-const roleSpecificFacts = {
-  doctor: [
-    "In 2022, 83% of healthcare organizations reported that their doctors had fallen victim to phishing attacks.",
-    "Medical professionals are 3 times more likely to click on phishing links than other industries.",
-    "A 2021 study found that 67% of doctors use personal devices to access patient data, creating significant security risks.",
-    "Medical identity theft can lead to incorrect medical records, potentially causing life-threatening treatment errors.",
-    "Healthcare providers can face fines of up to $50,000 per HIPAA violation, with a maximum annual penalty of $1.5 million."
-  ],
-  nurse: [
-    "Nurses are often targeted by cybercriminals due to their access to patient records and limited cybersecurity training.",
-    "A 2020 survey found that 78% of nurses had received suspicious emails at work, but only 37% reported them to IT.",
-    "Mobile nursing stations and tablets used for patient care are frequently targeted by malware and ransomware.",
-    "Nurses working remotely are 3.5 times more likely to experience a security incident than those working in hospitals.",
-    "Healthcare organizations lose an average of $7.13 million per year due to nurse-related security incidents."
-  ],
-  admin: [
-    "Administrative staff are responsible for 60% of healthcare data breaches, often due to human error.",
-    "Healthcare administrators receive an average of 14.2 malicious emails per month, with 28% being opened.",
-    "A single compromised administrative account can provide access to thousands of patient records.",
-    "Healthcare organizations spend an average of $1.4 million annually on administrative staff cybersecurity training.",
-    "Administrative staff are 4 times more likely to use weak passwords than clinical staff."
-  ],
-  student: [
-    "Medical students are increasingly targeted by cybercriminals due to their access to hospital systems and limited security awareness.",
-    "A 2021 study found that 72% of medical students had never received formal cybersecurity training.",
-    "Medical students using personal devices for clinical rotations create significant security vulnerabilities.",
-    "Healthcare organizations report that 45% of security incidents involve students or residents.",
-    "Medical students are 5 times more likely to share login credentials than practicing physicians."
-  ],
-  specialist: [
-    "Healthcare IT specialists face an average of 816 cyberattacks per week, a 71% increase from 2021.",
-    "Medical devices have an average of 6.2 vulnerabilities per device, with 60% being critical or high severity.",
-    "Healthcare networks are scanned by malicious actors an average of 16,500 times per day.",
-    "IT specialists in healthcare spend an average of 18.3 hours per week addressing security incidents.",
-    "Healthcare organizations with dedicated security teams reduce breach costs by an average of $2.1 million."
-  ]
-};
-
-// Function to get the correct image source
+// Helper function to get the correct image source
 const getImageSource = (imageName: string) => {
-  switch (imageName) {
-    case "anthem":
-      return require('../../assets/images/anthem.png');
-    default:
-      return require('../../assets/images/Background.png');
-  }
+  const images: { [key: string]: any } = {
+    anthem: require('@/assets/images/anthem.png'),
+  };
+  return images[imageName] || images.anthem;
 };
 
-interface ShockMeProps {
-  role: string;
-}
+export default function ShockMe() {
+  const [currentIncident, setCurrentIncident] = useState(cybersecurityIncidents[0]);
 
-export default function ShockMe({ role }: ShockMeProps) {
-  const [currentIncident, setCurrentIncident] = useState<any>(null);
-
-  // Generate random incident on component mount
-  useEffect(() => {
-    generateRandomIncident();
-  }, [role]);
-
+  // Generate a random incident
   const generateRandomIncident = () => {
-    // Generate random incident
-    const randomIncidentIndex = Math.floor(Math.random() * cybersecurityIncidents.length);
-    setCurrentIncident(cybersecurityIncidents[randomIncidentIndex]);
+    const randomIndex = Math.floor(Math.random() * cybersecurityIncidents.length);
+    setCurrentIncident(cybersecurityIncidents[randomIndex]);
   };
 
-  return (
-    <View style={styles.container}>
-      <ImageBackground 
-        source={require('@/assets/images/Background10.png')}
-        style={styles.backgroundImage}
-      >
-        <ScrollView style={styles.contentContainer}>
-          {currentIncident && (
-            <ImageBackground 
-              source={require('@/assets/images/shockback.png')}
-              style={styles.contentBackground}
-            >
-              <View style={styles.contentBox}>
-                <Text style={styles.contentTitle}>{currentIncident.title}</Text>
-                <Text style={styles.contentDate}>{currentIncident.date}</Text>
-                <Text style={styles.contentDescription}>{currentIncident.description}</Text>
-                <View style={styles.cardFooter}>
-                  <Text style={styles.cardImpact}>Impact: {currentIncident.impact}</Text>
-                  <Text style={styles.cardSource}>Source: {currentIncident.source}</Text>
-                </View>
-                
-                {/* Image with proper loading */}
-                <View style={styles.imageContainer}>
-                  <Image 
-                    source={getImageSource(currentIncident.imageName)}
-                    style={styles.incidentImage}
-                    resizeMode="cover"
-                    onError={(error) => console.error('Image loading error:', error.nativeEvent)}
-                  />
-                </View>
-              </View>
-            </ImageBackground>
-          )}
-        </ScrollView>
+  // Initialize with a random incident when component mounts
+  useEffect(() => {
+    generateRandomIncident();
+  }, []);
 
-        <TouchableOpacity style={styles.refreshButton} onPress={generateRandomIncident}>
-          <Ionicons name="refresh" size={24} color="#FFFFFF" />
-          <Text style={styles.refreshButtonText}>SHOCK ME AGAIN</Text>
-        </TouchableOpacity>
-      </ImageBackground>
-    </View>
+  return (
+    <ImageBackground 
+      source={require('@/assets/images/Background10.png')}
+      style={styles.backgroundImage}
+    >
+      <ScrollView style={styles.container}>
+        {/* Title section */}
+        <View style={styles.header}>
+          <Text style={styles.title}>SHOCK ME!</Text>
+          <Text style={styles.subtitle}>
+            Discover real cybersecurity incidents in healthcare
+          </Text>
+        </View>
+
+        {/* Incident display */}
+        <View style={styles.contentContainer}>
+          <View style={styles.card}>
+            <Image 
+              source={getImageSource(currentIncident.imageName)}
+              style={styles.incidentImage}
+              resizeMode="cover"
+            />
+            <Text style={styles.cardTitle}>{currentIncident.title}</Text>
+            <Text style={styles.cardDate}>{currentIncident.date}</Text>
+            <Text style={styles.cardDescription}>{currentIncident.description}</Text>
+            <View style={styles.cardFooter}>
+              <Text style={styles.impactText}>Impact: {currentIncident.impact}</Text>
+              <Text style={styles.sourceText}>Source: {currentIncident.source}</Text>
+            </View>
+          </View>
+
+          {/* Refresh button */}
+          <TouchableOpacity 
+            style={styles.refreshButton}
+            onPress={generateRandomIncident}
+          >
+            <Ionicons name="refresh" size={24} color="#1D4B48" />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
   backgroundImage: {
     flex: 1,
     width: '100%',
-    height: '100%',
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#1D4B48',
+    marginBottom: 10,
+    fontFamily: 'Italiana',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
   },
   contentContainer: {
     flex: 1,
-    marginHorizontal: 15,
-    marginBottom: 20,
-    marginTop: 20,
   },
-  contentBackground: {
-    borderRadius: 0,
-    overflow: 'hidden',
-    marginBottom: 15,
-  },
-  contentBox: {
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 15,
     padding: 20,
-    alignItems: 'center',
+    marginBottom: 20,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
-  contentTitle: {
+  cardTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: '#1D4B48',
     marginBottom: 10,
-    textAlign: 'center',
   },
-  contentDate: {
-    color: '#FFFFFF',
+  cardDate: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 10,
+  },
+  cardDescription: {
     fontSize: 16,
+    color: '#333',
     marginBottom: 15,
-    textAlign: 'center',
-  },
-  contentDescription: {
-    fontSize: 16,
     lineHeight: 24,
-    color: '#FFFFFF',
-    marginBottom: 15,
-    textAlign: 'center',
   },
   cardFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
-    marginBottom: 20,
-    width: '100%',
-  },
-  cardImpact: {
-    color: '#FFD700',
-    fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  cardSource: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontStyle: 'italic',
-    textAlign: 'center',
-  },
-  imageContainer: {
-    height: 200,
-    borderRadius: 0,
-    overflow: 'hidden',
-    marginTop: 10,
-    position: 'relative',
-    width: '100%',
   },
   incidentImage: {
     width: '100%',
-    height: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  impactText: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: 'bold',
+  },
+  sourceText: {
+    fontSize: 14,
+    color: '#666',
+    fontStyle: 'italic',
   },
   refreshButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
+    backgroundColor: 'white',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     justifyContent: 'center',
-    backgroundColor: '#286964',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 0,
-    marginHorizontal: 20,
-    marginBottom: 20,
-  },
-  refreshButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 10,
+    alignItems: 'center',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
 }); 

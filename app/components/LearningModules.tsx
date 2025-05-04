@@ -3,107 +3,94 @@ import { Text } from '@/components/Themed';
 import { useState } from 'react';
 import PhishingSimulation from './PhishingSimulation';
 import PasswordSimulation from './PasswordSimulation';
+import CybersecurityRelations from './CybersecurityRelations';
+import SocialEngineering from './SocialEngineering';
 
 // Role-specific content
 const roleSpecificContent = {
   doctor: {
     learn: [
-      { id: 1, title: "How Doctors Pertain to Security", description: "Understanding your role in healthcare cybersecurity" },
+      { id: 1, title: "How Cybersecurity Relates to Doctors", description: "Understanding your role in healthcare cybersecurity" },
       { id: 2, title: "Social Engineering Awareness", description: "Understanding and preventing social engineering" },
-      { id: 3, title: "Medical Device Protection", description: "Securing medical devices and equipment" }
+      { id: 3, title: "Coming Soon", description: "More content coming soon" }
     ],
     simulations: [
       { id: 1, title: "Phishing Attack", description: "Identify and avoid phishing attempts" },
       { id: 2, title: "Stronger Passwords", description: "Create and manage secure passwords" },
-      { id: 3, title: "Medical Record Access", description: "Proper access control for patient records" }
+      { id: 3, title: "Coming Soon", description: "More simulations coming soon" }
     ],
     resources: [
-      { id: 1, title: "HIPAA Guidelines", description: "Official HIPAA security guidelines and regulations", url: "https://www.hhs.gov/hipaa" },
-      { id: 2, title: "Medical Device Security", description: "FDA guidance on securing medical devices", url: "https://www.fda.gov/medical-devices" },
-      { id: 3, title: "Healthcare Cybersecurity", description: "Professional security resources for healthcare", url: "https://www.hhs.gov/hipaa/for-professionals/security" }
+      { id: 1, title: "NHS Digital Security", description: "Official NHS security guidance", url: "https://digital.nhs.uk/cyber-and-data-security" },
+      { id: 2, title: "Healthcare Cybersecurity", description: "NHS cybersecurity training", url: "https://www.e-lfh.org.uk/programmes/data-security-awareness/" },
+      { id: 3, title: "Security Best Practices", description: "NHS security best practices video", url: "https://www.youtube.com/watch?v=GJpn7_t_jZA" }
     ]
   },
   nurse: {
     learn: [
-      { id: 1, title: "How Nurses Pertain to Security", description: "Understanding your role in healthcare cybersecurity" },
+      { id: 1, title: "How Cybersecurity Relates to Nurses", description: "Understanding your role in healthcare cybersecurity" },
       { id: 2, title: "Social Engineering Awareness", description: "Understanding and preventing social engineering" },
-      { id: 3, title: "Patient Data Security", description: "Protecting sensitive patient information" }
+      { id: 3, title: "Coming Soon", description: "More content coming soon" }
     ],
     simulations: [
       { id: 1, title: "Phishing Attack", description: "Identify and avoid phishing attempts" },
       { id: 2, title: "Stronger Passwords", description: "Create and manage secure passwords" },
-      { id: 3, title: "Mobile Device Safety", description: "Protecting patient data on mobile devices" }
+      { id: 3, title: "Coming Soon", description: "More simulations coming soon" }
     ],
     resources: [
-      { id: 1, title: "Nursing Informatics", description: "Health IT basics for nursing professionals", url: "https://www.healthit.gov/topic/health-it-and-health-information-management-basics" },
-      { id: 2, title: "Mobile Security", description: "Guidance for securing mobile devices", url: "https://www.hhs.gov/hipaa/for-professionals/security/guidance/mobile-devices" },
-      { id: 3, title: "Nursing Cybersecurity", description: "Cybersecurity resources for nurses", url: "https://www.nursingworld.org/practice-policy/work-environment/health-safety/cybersecurity/" }
+      { id: 1, title: "Nursing Data Security", description: "NHS data security for nurses", url: "https://digital.nhs.uk/services/data-security-and-protection-toolkit" },
+      { id: 2, title: "Patient Data Protection", description: "Protecting patient information", url: "https://www.england.nhs.uk/ig/" },
+      { id: 3, title: "Security Training", description: "NHS security awareness video", url: "https://www.youtube.com/watch?v=V0rR2Gk9WXk" }
     ]
   },
   admin: {
     learn: [
-      { id: 1, title: "How Administrators Pertain to Security", description: "Understanding your role in healthcare cybersecurity" },
+      { id: 1, title: "How Cybersecurity Relates to Admins", description: "Understanding your role in healthcare cybersecurity" },
       { id: 2, title: "Social Engineering Awareness", description: "Understanding and preventing social engineering" },
-      { id: 3, title: "System Access Control", description: "Managing and securing system access" }
-    ],
-    quizzes: [
-      { id: 1, title: "System Security Quiz", description: "Test your knowledge of system security" },
-      { id: 2, title: "Access Control Management", description: "Managing access to healthcare systems" },
-      { id: 3, title: "Security Policy Implementation", description: "Implementing security policies" }
+      { id: 3, title: "Coming Soon", description: "More content coming soon" }
     ],
     simulations: [
       { id: 1, title: "Phishing Attack", description: "Identify and avoid phishing attempts" },
       { id: 2, title: "Stronger Passwords", description: "Create and manage secure passwords" },
-      { id: 3, title: "Incident Response", description: "Responding to security incidents" }
+      { id: 3, title: "Coming Soon", description: "More simulations coming soon" }
     ],
     resources: [
-      { id: 1, title: "Healthcare IT Security", description: "Comprehensive security guidelines", url: "https://www.hhs.gov/hipaa/for-professionals/security" },
-      { id: 2, title: "Access Control", description: "Best practices for access management", url: "https://www.hhs.gov/hipaa/for-professionals/security/guidance/access-control" },
-      { id: 3, title: "Security Policies", description: "Templates and guides for security policies", url: "https://www.hhs.gov/hipaa/for-professionals/security/guidance/security-policies" }
+      { id: 1, title: "Admin Security Guide", description: "NHS administrative security guide", url: "https://digital.nhs.uk/data-and-information/looking-after-information/data-security-and-information-governance" },
+      { id: 2, title: "Information Governance", description: "NHS information governance framework", url: "https://www.nhsx.nhs.uk/information-governance/" },
+      { id: 3, title: "Security Awareness", description: "Healthcare security overview video", url: "https://www.youtube.com/watch?v=2TxLPG-pqHs" }
     ]
   },
   student: {
     learn: [
-      { id: 1, title: "How Students Pertain to Security", description: "Understanding your role in healthcare cybersecurity" },
+      { id: 1, title: "How Cybersecurity Relates to Students", description: "Understanding your role in healthcare cybersecurity" },
       { id: 2, title: "Social Engineering Awareness", description: "Understanding and preventing social engineering" },
-      { id: 3, title: "Healthcare Privacy Basics", description: "Introduction to healthcare data privacy" }
-    ],
-    quizzes: [
-      { id: 1, title: "Healthcare Cybersecurity Basics", description: "Fundamentals of healthcare cybersecurity" },
-      { id: 2, title: "Patient Data Protection", description: "How to protect patient information" },
-      { id: 3, title: "Security Best Practices", description: "Basic security practices for beginners" }
+      { id: 3, title: "Coming Soon", description: "More content coming soon" }
     ],
     simulations: [
       { id: 1, title: "Phishing Attack", description: "Identify and avoid phishing attempts" },
       { id: 2, title: "Stronger Passwords", description: "Create and manage secure passwords" },
-      { id: 3, title: "Social Engineering", description: "Recognize and prevent social engineering attacks" }
+      { id: 3, title: "Coming Soon", description: "More simulations coming soon" }
     ],
     resources: [
-      { id: 1, title: "Healthcare Cybersecurity 101", description: "Introduction to healthcare security", url: "https://www.hhs.gov/hipaa/for-professionals/security/guidance/cybersecurity" },
-      { id: 2, title: "Student Resources", description: "Learning materials for students", url: "https://www.healthit.gov/topic/health-it-and-health-information-management-basics" },
-      { id: 3, title: "Learning Materials", description: "Additional educational resources", url: "https://www.hhs.gov/hipaa/for-professionals/security/guidance/learning-materials" }
+      { id: 1, title: "Student Guide", description: "NHS student security guide", url: "https://digital.nhs.uk/cyber-and-data-security/cyber-security-good-practice-guides" },
+      { id: 2, title: "Learning Hub", description: "NHS Digital learning resources", url: "https://www.e-lfh.org.uk/programmes/data-security-awareness/" },
+      { id: 3, title: "Security Basics", description: "Healthcare security basics video", url: "https://www.youtube.com/watch?v=sdpxddDzXfE" }
     ]
   },
   specialist: {
     learn: [
-      { id: 1, title: "How Specialists Pertain to Security", description: "Understanding your role in healthcare cybersecurity" },
+      { id: 1, title: "How Cybersecurity Relates to Specialists", description: "Understanding your role in healthcare cybersecurity" },
       { id: 2, title: "Social Engineering Awareness", description: "Understanding and preventing social engineering" },
-      { id: 3, title: "Advanced Security Protocols", description: "Implementation of advanced security measures" }
-    ],
-    quizzes: [
-      { id: 1, title: "Advanced Security Measures", description: "Advanced security techniques" },
-      { id: 2, title: "Network Security Protocols", description: "Understanding network security" },
-      { id: 3, title: "Security Audit Procedures", description: "Conducting security audits" }
+      { id: 3, title: "Coming Soon", description: "More content coming soon" }
     ],
     simulations: [
       { id: 1, title: "Phishing Attack", description: "Identify and avoid phishing attempts" },
       { id: 2, title: "Stronger Passwords", description: "Create and manage secure passwords" },
-      { id: 3, title: "Penetration Testing", description: "Simulated penetration testing" }
+      { id: 3, title: "Coming Soon", description: "More simulations coming soon" }
     ],
     resources: [
-      { id: 1, title: "Advanced Security", description: "Advanced security implementation guides", url: "https://www.hhs.gov/hipaa/for-professionals/security/guidance/advanced-security" },
-      { id: 2, title: "Network Security", description: "Network security best practices", url: "https://www.hhs.gov/hipaa/for-professionals/security/guidance/network-security" },
-      { id: 3, title: "Security Auditing", description: "Guidelines for security auditing", url: "https://www.hhs.gov/hipaa/for-professionals/security/guidance/security-auditing" }
+      { id: 1, title: "Technical Security", description: "NHS technical security guidance", url: "https://digital.nhs.uk/services/data-and-cyber-security-protecting-information-and-data-in-health-and-care" },
+      { id: 2, title: "Security Standards", description: "NHS security standards and frameworks", url: "https://digital.nhs.uk/data-and-information/looking-after-information/data-security-and-information-governance/data-security-and-protection-toolkit" },
+      { id: 3, title: "Advanced Security", description: "Advanced healthcare security video", url: "https://www.youtube.com/watch?v=ULUL4PW7X3Y" }
     ]
   }
 };
@@ -112,6 +99,8 @@ export default function LearningModules({ role }: { role: string }) {
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const [showPhishingSimulation, setShowPhishingSimulation] = useState(false);
   const [showPasswordSimulation, setShowPasswordSimulation] = useState(false);
+  const [showCybersecurityRelations, setShowCybersecurityRelations] = useState(false);
+  const [showSocialEngineering, setShowSocialEngineering] = useState(false);
   
   // Get content based on role
   const content = roleSpecificContent[role as keyof typeof roleSpecificContent] || roleSpecificContent.doctor;
@@ -124,6 +113,12 @@ export default function LearningModules({ role }: { role: string }) {
     } else if (moduleId === 'sim-2') {
       console.log('Opening password simulation');
       setShowPasswordSimulation(true);
+    } else if (moduleId === 'learn-1') {
+      console.log('Opening cybersecurity relations');
+      setShowCybersecurityRelations(true);
+    } else if (moduleId === 'learn-2') {
+      console.log('Opening social engineering awareness');
+      setShowSocialEngineering(true);
     } else {
       setActiveModule(moduleId === activeModule ? null : moduleId);
     }
@@ -277,6 +272,29 @@ export default function LearningModules({ role }: { role: string }) {
           onRequestClose={() => setShowPasswordSimulation(false)}
         >
           <PasswordSimulation onComplete={() => setShowPasswordSimulation(false)} />
+        </Modal>
+
+        {/* Cybersecurity Relations Modal */}
+        <Modal
+          visible={showCybersecurityRelations}
+          animationType="slide"
+          onRequestClose={() => setShowCybersecurityRelations(false)}
+        >
+          <CybersecurityRelations 
+            role={role} 
+            onComplete={() => setShowCybersecurityRelations(false)} 
+          />
+        </Modal>
+
+        {/* Social Engineering Modal */}
+        <Modal
+          visible={showSocialEngineering}
+          animationType="slide"
+          onRequestClose={() => setShowSocialEngineering(false)}
+        >
+          <SocialEngineering 
+            onComplete={() => setShowSocialEngineering(false)} 
+          />
         </Modal>
       </ImageBackground>
     </View>

@@ -69,11 +69,14 @@ export default function PasswordSimulation({ onComplete }: PasswordSimulationPro
             style={styles.submitButton}
             onPress={validatePassword}
           >
-            <Image 
-              source={require('@/assets/images/CheckButton.png')}
-              style={styles.checkButton}
-              resizeMode="contain"
-            />
+            <View style={styles.buttonContent}>
+              <Text style={styles.submitButtonText}>Check Password</Text>
+              <Image 
+                source={require('@/assets/images/CheckButton.png')}
+                style={styles.checkButton}
+                resizeMode="contain"
+              />
+            </View>
           </TouchableOpacity>
         </View>
 
@@ -198,9 +201,25 @@ const styles = StyleSheet.create({
     height: 50,
     width: 238,
   },
+  buttonContent: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  submitButtonText: {
+    position: 'absolute',
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'Italiana',
+    zIndex: 1,
+  },
   checkButton: {
     width: '100%',
     height: '100%',
+    position: 'absolute',
   },
   modalContainer: {
     flex: 1,
