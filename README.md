@@ -39,7 +39,7 @@ A mobile application developed for Healthcare Professionals to educate them abou
    ```
 
    1. **Start development server**
-   `bash
+   ```bash
     - npm start
     - npx expo start
    ```
