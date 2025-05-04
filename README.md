@@ -39,37 +39,37 @@ A mobile application developed for Healthcare Professionals to educate them abou
    ```
 
    1. **Start development server**
-   ```bash
-        npm start
-        npm expo start
+   `bash
+    - npm start
+    - npx expo start
    ```
 
 ### Executing program
 
 * How to run the program
 * Step-by-step bullets
-```
-    Ensure that your Emulator is ready in Android Studio
-        Press 'a' for Android emulator
-    
-    or
+ ```
+Ensure that your Emulator is ready in Android Studio
+Press 'a' for Android emulator
+  
+or
 
-        Press 'w' for localhost Web version
+Press 'w' for localhost Web version
 ```
 
 ## Help
 
 Any advise for common problems or issues.
  1. **Module not found**
-   ```bash
-        npm install
-   ```
+    ```bash
+    npm install
+    ```
 
  2.  **No Android connected device found**
     ```bash
-        Start Android Studio,
-        open Device Manager,
-        choose desired emulator (Resizeable Experimental Version)
+    Start Android Studio,
+    open Device Manager,
+    choose desired emulator (Resizeable Experimental Version)
     ```
 
  3. **Expo Go connection issues**
